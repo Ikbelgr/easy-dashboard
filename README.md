@@ -24,30 +24,6 @@ A comprehensive Streamlit dashboard for analyzing transaction data, customer coh
 7. **RFM Segmentation** - Customer value analysis
 8. **Month Comparison** - Period comparison tools
 
-## 🛠️ Installation
-
-### Local Development
-```bash
-# Clone the repository
-git clone <your-repo-url>
-cd cohort_dashboard
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Run the dashboard
-streamlit run app.py
-```
-
-### Deployment
-This dashboard is deployed on Streamlit Cloud and can be accessed at:
-[Your Streamlit Cloud URL will appear here after deployment]
-
-**To deploy:**
-1. Follow the Step-by-Step Deployment Guide below
-2. After deployment, replace `[Your Streamlit Cloud URL will appear here after deployment]` with your actual URL
-3. Update this README and push to GitHub
-
 ## 📁 Project Structure
 
 ```
@@ -70,7 +46,7 @@ cohort_dashboard/
 
 The dashboard supports:
 - **Date Range Filtering** - Select custom date ranges
-- **Country Filtering** - Filter by Tunisia, Morocco, or All
+- **Country Filtering** - Filter by country
 - **CSV File Upload** - Upload your transaction data
 - **Real-time Updates** - KPIs update based on selected filters
 
@@ -87,13 +63,11 @@ Your CSV file should include these columns:
 
 ## 🌐 Live Demo
 
-Access the live dashboard: [Your Streamlit Cloud URL will appear here after deployment]
+Access the live dashboard: https://easy-dashboard-rhfk9nfkwpwdzbymfyds6d.streamlit.app/
 
-**To get your URL:**
-1. Deploy to Streamlit Cloud (see instructions above)
-2. Replace `[Your Streamlit Cloud URL will appear here after deployment]` with your actual URL
-3. Update this README and push to GitHub
+**Repository:** https://github.com/Ikbelgr/easy-dashboard
 
-## 📝 License
-
-This project is open source and available under the MIT License. 
+**Live Dashboard Features:**
+- 📊 Real-time KPIs and analytics
+- 📈 Interactive charts and visualizations
+- 🔍 Advanced analytics including RFM segmentation 
