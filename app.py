@@ -975,14 +975,14 @@ Each customer receives a score from 1 (lowest) to 5 (highest) for each metric, b
                 st.write(f"**{selected_month1}**")
                 city_data1_tx, _ = group_top_n_with_other(data1[['ville', 'Transactions']].copy(), 'Transactions', top_n=8)
                 city_data1_cust, _ = group_top_n_with_other(data1[['ville', 'Unique_Customers']].copy(), 'Unique_Customers', top_n=8)
-                st.plotly_chart(plot_pie(city_data1_tx['ville'], city_data1_tx['Transactions'], f"Transactions by City - {selected_month1}"), use_container_width=True)
-                st.plotly_chart(plot_pie(city_data1_cust['ville'], city_data1_cust['Unique_Customers'], f"Unique Customers by City - {selected_month1}"), use_container_width=True)
+                st.plotly_chart(plot_pie(city_data1_tx['ville'], city_data1_tx['Transactions'], f"Transactions by City - {selected_month1}"), use_container_width=True, key="month1_tx")
+                st.plotly_chart(plot_pie(city_data1_cust['ville'], city_data1_cust['Unique_Customers'], f"Unique Customers by City - {selected_month1}"), use_container_width=True, key="month1_cust")
             with c2:
                 st.write(f"**{selected_month2}**")
                 city_data2_tx, _ = group_top_n_with_other(data2[['ville', 'Transactions']].copy(), 'Transactions', top_n=8)
                 city_data2_cust, _ = group_top_n_with_other(data2[['ville', 'Unique_Customers']].copy(), 'Unique_Customers', top_n=8)
-                st.plotly_chart(plot_pie(city_data2_tx['ville'], city_data2_tx['Transactions'], f"Transactions by City - {selected_month2}"), use_container_width=True)
-                st.plotly_chart(plot_pie(city_data2_cust['ville'], city_data2_cust['Unique_Customers'], f"Unique Customers by City - {selected_month2}"), use_container_width=True)
+                st.plotly_chart(plot_pie(city_data2_tx['ville'], city_data2_tx['Transactions'], f"Transactions by City - {selected_month2}"), use_container_width=True, key="month2_tx")
+                st.plotly_chart(plot_pie(city_data2_cust['ville'], city_data2_cust['Unique_Customers'], f"Unique Customers by City - {selected_month2}"), use_container_width=True, key="month2_cust")
         else:
             st.info("Month or city data not available in this dataset.")
 else:
