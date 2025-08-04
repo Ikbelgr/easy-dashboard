@@ -438,14 +438,14 @@ if uploaded_file:
                     yaxis_title="Number of Transactions",
                     hovermode='x unified'
                 )
-                st.plotly_chart(fig_status, use_container_width=True)
+                st.plotly_chart(fig_status, use_container_width=True, key="monthly_status_chart")
             
             # Original channel breakdown
             st.markdown("**📊 Transactions by Distribution Channel**")
             grouped = monthly_summary_by_channel(df_filtered)
             pivoted = grouped.pivot(index='transaction_month', columns='distributionChannel', values='Total Transactions').fillna(0)
             fig = plot_combined_by_channel(pivoted, country)
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, use_container_width=True, key="monthly_channel_chart")
         else:
             # Day view: let user pick a day within the filtered range
             min_day = df_filtered['transaction_date'].min().date()
@@ -466,14 +466,14 @@ if uploaded_file:
                     
                     import plotly.express as px
                     fig_status = px.pie(values=status_counts.values, names=status_counts.index, title=f"Transaction Status for {selected_day}")
-                    st.plotly_chart(fig_status, use_container_width=True)
+                    st.plotly_chart(fig_status, use_container_width=True, key="daily_status_chart")
                 
                 # Channel breakdown for the day (pie chart)
                 st.markdown(f"**📊 Channel Breakdown for {selected_day} (Pie Chart)**")
                 channel_counts = day_df['distributionChannel'].value_counts()
                 import plotly.express as px
                 fig_channel = px.pie(values=channel_counts.values, names=channel_counts.index, title=f"Transactions by Channel for {selected_day}")
-                st.plotly_chart(fig_channel, use_container_width=True)
+                st.plotly_chart(fig_channel, use_container_width=True, key="daily_channel_chart")
                 
                 # Show transaction summary for selected day
                 st.markdown(f"**📊 Transaction Summary for {selected_day}**")
@@ -601,13 +601,13 @@ if uploaded_file:
                     yaxis_title="Number of Unique Customers",
                     hovermode='x unified'
                 )
-                st.plotly_chart(fig_customer_status, use_container_width=True)
+                st.plotly_chart(fig_customer_status, use_container_width=True, key="monthly_customer_status_chart")
             
             # Original customer stats
             st.markdown("**📊 Customer Statistics**")
             combined = monthly_customer_stats(df_filtered)
             fig = plot_customers_with_new_and_total(combined, country)
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, use_container_width=True, key="monthly_customer_stats_chart")
         else:
             min_day = df_filtered['transaction_date'].min().date()
             max_day = df_filtered['transaction_date'].max().date()
@@ -627,7 +627,7 @@ if uploaded_file:
                     
                     import plotly.express as px
                     fig_customer_status = px.pie(values=customer_status_counts.values, names=customer_status_counts.index, title=f"Customer Status for {selected_day}")
-                    st.plotly_chart(fig_customer_status, use_container_width=True)
+                    st.plotly_chart(fig_customer_status, use_container_width=True, key="daily_customer_status_chart")
                 
                 # Active customers for the day
                 active_customers = day_df['customer_id'].nunique()
@@ -715,7 +715,7 @@ if uploaded_file:
             df_period = df_filtered[df_filtered['transaction_month'].dt.to_period('M') == period]
         tx_counts = df_period['country'].value_counts().reset_index()
         tx_counts.columns = ['Country', 'Total Transactions']
-        st.plotly_chart(plot_pie(tx_counts['Country'], tx_counts['Total Transactions'], f'Total Transactions by Country'), use_container_width=True)
+        st.plotly_chart(plot_pie(tx_counts['Country'], tx_counts['Total Transactions'], f'Total Transactions by Country'), use_container_width=True, key="country_tx_chart")
         # Pie: Unique customers by country
         selected_month_customers = st.selectbox("Select period for Unique Customers breakdown", options=month_options, key='customers_period')
         if selected_month_customers == "All period":
@@ -725,7 +725,7 @@ if uploaded_file:
             df_period = df_filtered[df_filtered['transaction_month'].dt.to_period('M') == period]
         unique_customers = df_period.groupby('country')['customer_id'].nunique().reset_index()
         unique_customers.columns = ['Country', 'Unique Customers']
-        st.plotly_chart(plot_pie(unique_customers['Country'], unique_customers['Unique Customers'], 'Unique Customers by Country'), use_container_width=True)
+        st.plotly_chart(plot_pie(unique_customers['Country'], unique_customers['Unique Customers'], 'Unique Customers by Country'), use_container_width=True, key="country_cust_chart")
         # Pie: Reason (if exists)
         if 'reason' in df_filtered.columns:
             selected_month_reason = st.selectbox("Select period for Reason breakdown", options=month_options, key='reason_period')
@@ -736,7 +736,7 @@ if uploaded_file:
                 df_period = df_filtered[df_filtered['transaction_month'].dt.to_period('M') == period]
             reason_counts = df_period['reason'].value_counts().reset_index()
             reason_counts.columns = ['Reason', 'Transaction Count']
-            st.plotly_chart(plot_pie(reason_counts['Reason'], reason_counts['Transaction Count'], f"Reasons for Money Transfers"), use_container_width=True)
+            st.plotly_chart(plot_pie(reason_counts['Reason'], reason_counts['Transaction Count'], f"Reasons for Money Transfers"), use_container_width=True, key="reason_chart")
         # Pie: Network (if exists)
         if 'network' in df_filtered.columns:
             selected_month_network = st.selectbox("Select period for Network breakdown", options=month_options, key='network_period')
@@ -747,7 +747,7 @@ if uploaded_file:
                 df_period = df_filtered[df_filtered['transaction_month'].dt.to_period('M') == period]
             network_counts = df_period['network'].str.strip().str.title().value_counts().reset_index()
             network_counts.columns = ['Network', 'Transaction Count']
-            st.plotly_chart(plot_pie(network_counts['Network'], network_counts['Transaction Count'], f'Network Usage'), use_container_width=True)
+            st.plotly_chart(plot_pie(network_counts['Network'], network_counts['Transaction Count'], f'Network Usage'), use_container_width=True, key="network_chart")
         # Pie: Governorate (if exists)
         if 'gov' in df_filtered.columns:
             selected_month_gov = st.selectbox("Select period for Governorate breakdown", options=month_options, key='gov_period')
@@ -758,7 +758,7 @@ if uploaded_file:
                 df_period = df_filtered[df_filtered['transaction_month'].dt.to_period('M') == period]
             gov_counts = df_period['gov'].value_counts().reset_index()
             gov_counts.columns = ['Governorate', 'Transaction Count']
-            st.plotly_chart(plot_pie(gov_counts['Governorate'], gov_counts['Transaction Count'], f'Transaction Distribution by Governorate'), use_container_width=True)
+            st.plotly_chart(plot_pie(gov_counts['Governorate'], gov_counts['Transaction Count'], f'Transaction Distribution by Governorate'), use_container_width=True, key="gov_chart")
 
     with tab5:
         st.subheader("Cities Analysis")
@@ -779,8 +779,8 @@ if uploaded_file:
                     import plotly.express as px
                     fig1 = px.line(monthly, x='transaction_month', y='Transactions', title=f"Transactions Over Time - {selected_ville}")
                     fig2 = px.line(monthly, x='transaction_month', y='Active_Customers', title=f"Active Customers Over Time - {selected_ville}")
-                    st.plotly_chart(fig1, use_container_width=True)
-                    st.plotly_chart(fig2, use_container_width=True)
+                    st.plotly_chart(fig1, use_container_width=True, key="city_tx_chart")
+                    st.plotly_chart(fig2, use_container_width=True, key="city_cust_chart")
                 else:
                     # Day view
                     min_day = city_df['transaction_date'].min().date()
@@ -799,7 +799,7 @@ if uploaded_file:
                             go.Bar(name='Active Customers', x=[str(selected_day)], y=[active_customers])
                         ])
                         fig.update_layout(barmode='group', title=f"City Activity for {selected_ville} on {selected_day}")
-                        st.plotly_chart(fig, use_container_width=True)
+                        st.plotly_chart(fig, use_container_width=True, key="city_day_chart")
                     else:
                         st.info("No data for this city on the selected day.")
                 # Withdrawal points breakdown with period selector
@@ -816,7 +816,7 @@ if uploaded_file:
                         city_period_df = city_df[city_df['transaction_month'].dt.to_period('M') == period]
                     network_counts = city_period_df['network'].str.strip().str.title().value_counts().reset_index()
                     network_counts.columns = ['Network', 'Transaction Count']
-                    st.plotly_chart(plot_pie(network_counts['Network'], network_counts['Transaction Count'], f'Withdrawal Points in {selected_ville}'), use_container_width=True)
+                    st.plotly_chart(plot_pie(network_counts['Network'], network_counts['Transaction Count'], f'Withdrawal Points in {selected_ville}'), use_container_width=True, key="city_network_chart")
             else:
                 st.info("No data for this city.")
         else:
@@ -832,7 +832,7 @@ if uploaded_file:
                 promo_counts.columns = ['Promo Code', 'Usage Count']
                 st.write("Promo Code Usage:")
                 st.dataframe(promo_counts, hide_index=True)
-                st.plotly_chart(plot_pie(promo_counts['Promo Code'], promo_counts['Usage Count'], f"Promo Code Usage - {country}"), use_container_width=True)
+                st.plotly_chart(plot_pie(promo_counts['Promo Code'], promo_counts['Usage Count'], f"Promo Code Usage - {country}"), use_container_width=True, key="promo_chart")
             else:
                 st.info("No valid promo codes found.")
         else:
@@ -887,7 +887,7 @@ if uploaded_file:
         )
         fig.update_traces(texttemplate='%{text}', textposition='outside')
         fig.update_layout(xaxis_title='Segment', yaxis_title='Number of Customers')
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, use_container_width=True, key="rfm_chart")
         # Download button for RFM CSV
         csv = rfm.to_csv(index=False).encode('utf-8')
         st.download_button(
