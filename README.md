@@ -63,7 +63,7 @@ Your CSV file should include these columns:
 
 ## 🌐 Live Demo
 
-Access the live dashboard: https://easy-dashboard-rhfk9nfkwpwdzbymfyds6d.streamlit.app/
+Access the live dashboard: https://easy-dashboard.streamlit.app/ 
 
 **Repository:** https://github.com/Ikbelgr/easy-dashboard
 
