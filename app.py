@@ -343,7 +343,7 @@ if uploaded_file:
                 
                 # Calculate monthly transaction stats with status breakdown
                 monthly_transaction_stats_with_status = []
-                months = sorted(df_filtered['transaction_month'].unique())
+                months = sorted(df_filtered['transaction_month'].unique(), reverse=True)
                 
                 for month in months:
                     month_data = df_filtered[df_filtered['transaction_month'] == month]
@@ -543,7 +543,7 @@ if uploaded_file:
                 
                 # Calculate monthly customer stats with status breakdown
                 monthly_customer_stats_with_status = []
-                months = sorted(df_filtered['transaction_month'].unique())
+                months = sorted(df_filtered['transaction_month'].unique(), reverse=True)
                 
                 for month in months:
                     month_data = df_filtered[df_filtered['transaction_month'] == month]
